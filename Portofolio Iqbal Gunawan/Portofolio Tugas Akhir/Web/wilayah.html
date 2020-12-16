@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>EPilkada</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light" style="background-color: #ee3231;" role="navigation" >
+      <div class="container-fluid">
+        <a href="Admin.html"><p style="color: white; margin-top: -10px;font-size: 20px;">Kembali</p></a>
+    </div>
+    </nav>
+
+    <div class="container-fluid text-white mt-5">
+      <div class="row">
+        <div class="col-sm-12 pt-5 pb-5 text-center" style="margin-top: -50px;">
+          <h2 style="color: black">Wilayah Pemilihan</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <label for="Jp">
+          Jenis Pemilihan
+        </label>
+      <select class="browser-default custom-select" id="comboJenis" onchange="doJenis()">
+        <option selected="">Jenis Wilayah</option>
+        <option value="0">Provinsi</option>
+        <option value="1">Kabupaten/Kota</option>
+      </select>
+      </div>
+      <div class="col-md-12" style="margin-top: 20px;">
+      <label for="provinsi">
+        Provinsi
+      </label>
+      <br>
+      <input type="text" name="provinsi" id="tvProvinsi" placeholder="masukkan nama provinsi">
+      <br>
+      <label for="kabkot">
+        Kabupaten/Kota
+      </label>
+      <br>
+      <input type="text" name="kabKot" id="tvKabKot" placeholder="masukkan nama kabupaten/kota">
+      <br>
+      </div>
+      <div class="col-md-6">
+        <label for="jlh_penduduk">
+          Jumlah Penduduk
+        </label>
+        <br>
+        <input type="number" id="jlhPenduduk" name="" placeholder="0">
+        <br>
+      </div>
+      <div class="col-md-6">
+        <label for="id_wilayah">
+          Kode Wilayah
+        </label>
+        <input type="text" id="idWilayah" name="" placeholder="00">
+      </div>
+    </div>
+  </div>
+    
+    <div class="col-md-12 center" style="margin-bottom: 20px;">
+      <button id="addBtnpaslon" class="btn btn-primary" id="btnAdd" onclick="addWilayah()">
+      Tambah Data
+    </button>
+    <button id="updateBtnpaslon" class="btn btn-success" id="btnUpdate" onclick="updateWilayah()"> 
+      Perbarui Data
+    </button>
+    <button id="readBtnpaslon" class="btn btn-success" id="btnRead" onclick="readWilayah()">
+      Baca Data
+    </button>
+    <button id="removeBtnpaslon" class="btn btn-danger" id="btnRemove" onclick="removeWilayah()">
+      Hapus Data
+    </button>
+    </div>
+    <p id="dataWilayah"></p>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase.js"></script>
+    <script src="./functionWilayah.js"></script>
+  </body>
+</html>

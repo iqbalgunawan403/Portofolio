@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" class="akar">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>EPilkada</title>
+    <style type="text/css">
+    .akar{
+      width: 100%;
+      height: 100%;
+    }
+      .modal {
+        min-height: 100%;
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0,0,0,0.3); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+#btnCloseCek{
+  margin-top: 30px;
+  width: fit-content;
+  height: fit-content;
+  align-self: center;
+}
+
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+    </style>
+  </head>
+  <body class="akar">
+    <div id='myModal' class="modal">
+      <div id="modalContent" class="modal-content">
+        <h4>Data Paslon:</h4>
+        <p id="textContent"></p>
+        <button class="btn btn-primary text-center" id="btnCloseCek">Okay</button>
+      </div>
+    </div>
+    <nav class="navbar navbar-light" style="background-color: #ee3231;" role="navigation" >
+      <div class="container-fluid">
+        <a href="Admin.html"><p style="color: white; margin-top: -10px;font-size: 20px;">Kembali</p></a>
+    </div>
+    </nav>
+
+    <div class="container text-white mt-5">
+      <div class="row">
+        <div class="col-sm-12 pt-5 pb-5 text-center" style="margin-top: -50px;">
+          <h2 style="color: black" >Input Pemilihan</h2>
+        </div>
+        <div class="col-md-12" style="margin-top: -30px;">
+      <label for="id_paslon">
+        ID Pasangan Calon
+      </label>
+      <br>
+      <input type="text" name="id_paslon" id="id_paslon" onchange="doInputId()">
+      <br>
+      
+      </div>
+      <div class="col-md-12 text-center">
+              <button class="btn btn-primary text-center" id="btnCekId">Check ID</button>
+      </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <label for="pilih">
+        Pilih Detail Wilayah Pemilihan
+      </label>
+      </div>
+      <div class="col-md-12">
+      <select class="browser-default custom-select" id="selectJenis" onchange="doJenis()">
+        <option selected="">Jenis Pemilihan</option>
+        <option value="1">Pemilihan Gubernur</option>
+        <option value="2">Pemilihan Bupati/Walikota</option>
+      </select>
+      </div>
+      <div class="col-md-12" style="margin-top: 20px;">
+      <select class="browser-default custom-select" id="selectGubernur" onchange="doGub()">
+        <option selected="">Provinsi</option>
+      </select>
+      </div>
+            <div class="col-md-12">
+      <select class="browser-default custom-select" style="margin-top: 20px;" id="selectBupKot">
+        <option selected="">Kota/Kabupaten</option>
+      </select>
+      </div>
+    </div>
+  </div>
+    
+  <div class="col-md-12">
+    <label for="id_paslon">
+      Jumlah Dukungan (%)
+    </label>
+    <br>
+    <input type="number" name="id_paslon" id="jlh_dukungan" placeholder="20" onchange="doJumlahDukungan()">
+    <br>    
+    </div>
+    
+    <div class="col-md-12 text-center" style="margin-top: 10px;">
+        <button class="btn btn-primary" id="btnTambah" onclick="addPemilihan()">Tambah</button>
+        <button id="updateBtnpaslon" class="btn btn-success" id="btnUpdate" onclick="updatePemilihan()"> 
+          Perbarui
+        </button>
+        <button id="readBtnpaslon" class="btn btn-success" id="btnRead" onclick="readPemilihan()">
+          Baca
+        </button>
+        <button id="removeBtnpaslon" class="btn btn-danger" id="btnRemove" onclick="removePemilihan()">
+          Hapus
+        </button>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase.js"></script>
+    <script type="text/javascript" src="./functionpemilihan.js"></script>
+  </body>
+</html>

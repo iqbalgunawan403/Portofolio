@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>EPilkada</title>
+<style type="text/css">
+	body{
+		background-image: url(indonesia-flag.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+		padding-top: 25vh;
+	}
+	form{
+		background: #fff
+	}
+	.form-container{
+		border-radius: 10px;
+		padding: 30px;
+		box-shadow: 0px 0px 10px 0px;
+
+	}
+	.bg{
+		width: 60px;
+		height: 60px;
+		position: absolute;
+		top: -35px;
+		left: 45%;
+		border-radius: 10px;
+	}
+</style>
+  </head>
+  <body>
+  	<section class="container-fluid">
+  		<section class="row justify-content-center">
+  			<section class="col-12 col-sm-6 col-md-5">
+  				<img src="computer-icons-user-profile-male-avatar-avatar-png-clip-art.png" class="bg">
+  				<form class="form-container">
+  					<h4 class="text-center font-eight-weight-bold">Login Admin</h4>
+  				<div class="form-group">
+  					<input type="text" class="form-control" id="InputNikAdmin" name="" placeholder="NIK Admin">
+  				</div>
+  				<div class="form-group">
+  					<input type="password" class="form-control" id="InputPassword" name="" placeholder="Masukkan Password">
+  				</div>
+          <button type="button" class="btn btn-primary btn-block" style="background-color: #blue" id="submit" onclick="validasi()">Masuk</button>
+  				</form>
+  			</section>
+  		</section>
+  	</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    
+    <!-- Import library firebase !-->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase.js"></script>
+
+    <script> 
+       var firebaseConfig = {
+      apiKey: "AIzaSyA-j64EFaKgeCpQCGQuW_qsR66l9S3glAg",
+      authDomain: "epilkada.firebaseapp.com",
+      databaseURL: "https://epilkada.firebaseio.com",
+      projectId: "epilkada",
+      storageBucket: "epilkada.appspot.com",
+      messagingSenderId: "1067360368312",
+      appId: "1:1067360368312:web:858e4dc7b6f8ab849ea64d"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+    var inputNikAdmin = document.getElementById("InputNikAdmin");
+    var inputPassword = document.getElementById("InputPassword");
+      
+  //Validasi NIK dan password
+    function validasi(){
+         var cek=false
+    db.collection('admin').where('nik_admin','==',inputNikAdmin.value).get()
+    .then(snapshot=>{
+      snapshot.forEach(data=>{
+        if(data.data()['password']==inputPassword.value){
+          cek=true
+        }
+      })
+      if(cek==true){
+         alert ("Login Sukses !!!");
+            window.location = "admin.html";
+          }else{
+            alert("NIK atau password salah!!!");
+          }
+    })
+        }
+    </script>
+  </body>
+</html>

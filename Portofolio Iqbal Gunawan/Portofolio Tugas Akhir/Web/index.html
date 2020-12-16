@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+  <a href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"></a>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>EPilkada</title>
+    <style type="text/css">
+          .kiri{
+      margin-left: 20px;
+      width: 50%;
+    }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-navbar navbar-light" style="background-color: #ee3231;" role="navigation" >
+      <div class="container-fluid">
+        <a href="index.html"><img src="logohome.png" width="40px" height="40px"></a>
+      <div class="navbar-header navbar-right">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="loginadmin.html"><p style="color: white">Login</p></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col md-12">
+          <canvas id="myChart" ></canvas>
+        </div>
+      </div>
+    
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+      <h5 style="text-align: center;margin-top: 20px;margin-bottom: 20px;">Silahkan Pilih Wilayah Pemilihan</h5>
+    </div>
+    <div class="col-md-3">
+      <p>Jenis Pemilihan:</p>
+      </div>
+      <div class="col-md-9">
+        <select name="combo" onChange="doJenis()" class="kiri" id="comboJenis" width="100px"></select>
+      </div>
+      <div class="col-md-3">
+              <p>Provinsi:</p>
+      </div>
+      <div class="col-md-9">
+        <select name="combo" class="kiri" onChange="doProv()" id="comboProvinsi" width="100px" style="background-color: #c1c1c1;"></select>
+      </div>
+      <div class="col-md-3">
+              <p>Kabupaten/Kota:</p>
+      </div>
+      <div class="col-md-9">
+        <select name="combo" class="kiri" id="comboKabKot" onChange="doKabKot()" width="100px" style="background-color: #c1c1c1;"></select>
+      </div>
+    
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary" onclick="showPemilihan()">Lihat Hasil</button>
+    </div>
+  </div>
+    </div>
+  </div>
+  
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyA-j64EFaKgeCpQCGQuW_qsR66l9S3glAg",
+      authDomain: "epilkada.firebaseapp.com",
+      databaseURL: "https://epilkada.firebaseio.com",
+      projectId: "epilkada",
+      storageBucket: "epilkada.appspot.com",
+      messagingSenderId: "1067360368312",
+      appId: "1:1067360368312:web:858e4dc7b6f8ab849ea64d"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+    
+    var suara=[];
+    var jenis=["Pilih jenis pemilihan","Pemilihan Gubernur","Pemilihan Bupati/Wali Kota"]
+    var dataProvinsi=["Pilih provinsi"]
+    var dataKabKot=["Pilih kabupaten/kota"]
+    var jenisCombo=document.getElementById("comboJenis");
+    var provinsiCombo=document.getElementById("comboProvinsi");
+    var kabkotCombo=document.getElementById("comboKabKot");
+    var option=document.createElement("option");
+    var option1=document.createElement("option");
+    var idProv=[]
+    db.collection("wilayah").get().then(function(querySnapshot){
+      querySnapshot.forEach(function(doc){
+        dataProvinsi.push(doc.data()["nama"])
+        idProv.push(doc.id)
+      })
+    })
+    option1.text=dataProvinsi[0]
+    option1.value=dataProvinsi[0]
+    provinsiCombo.add(option1,null)
+    option.text=dataKabKot[0]
+    option.value=dataKabKot[0]
+    kabkotCombo.add(option,null)
+    provinsiCombo.disabled=true
+    kabkotCombo.disabled=true
+    jenis.forEach(element => {
+      var option=document.createElement("option");
+      option.text=element
+      option.value=element
+      jenisCombo.add(option,null);
+    });
+    var alreadyProv=false
+    function doJenis() {
+      if(jenisCombo.selectedIndex==1){
+        provinsiCombo.disabled=false
+        provinsiCombo.style.backgroundColor="#fff"
+        kabkotCombo.disabled=true
+        kabkotCombo.style.backgroundColor="#c1c1c1"
+        if(alreadyProv==false){
+          for(k=0;k<dataProvinsi.length;k++){
+          if(k!=0){
+          var option2=document.createElement("option");
+          option2.text=dataProvinsi[k]
+          option2.value=dataProvinsi[k]
+          provinsiCombo.add(option2,null);
+          }
+        }
+        alreadyProv=true
+        }
+      }
+      else if(jenisCombo.selectedIndex==2){
+        provinsiCombo.disabled=false
+        provinsiCombo.style.backgroundColor="#fff"
+        if(alreadyProv==false){
+          for(k=0;k<dataProvinsi.length;k++){
+          if(k!=0){
+          var option2=document.createElement("option");
+          option2.text=dataProvinsi[k]
+          option2.value=dataProvinsi[k]
+          provinsiCombo.add(option2,null);
+          }
+        }
+        alreadyProv=true
+        }
+        kabkotCombo.disabled=false
+        kabkotCombo.style.backgroundColor="#fff"
+      }else{
+        kabkotCombo.disabled=true
+        kabkotCombo.style.backgroundColor="#c1c1c1"
+        provinsiCombo.disabled=true
+        provinsiCombo.style.backgroundColor="#c1c1c1"
+      }
+    };
+
+    var selectedProv="";
+    var helper=0
+    function doProv(){
+      if(provinsiCombo.selectedIndex!=0){
+        comboKabKot.length=1
+        dataKabKot=[]
+        selectedProv=dataProvinsi[provinsiCombo.selectedIndex]
+        db.collection("wilayah").doc(idProv[provinsiCombo.selectedIndex-1]).collection("kabupaten_kota").get().then(function(querySnapshot) {
+          querySnapshot.forEach(doc=>{
+            dataKabKot.push(doc.data()["nama"]);
+            var option=document.createElement("option");
+              option.text=dataKabKot[helper]
+              option.value=dataKabKot[helper]
+              kabkotCombo.add(option,null);
+              helper++
+          });
+          helper=0
+      })
+    }
+  }
+
+  var selectedKabKot="";
+  function doKabKot(){
+    if(kabkotCombo.selectedIndex!=0){
+      selectedKabKot=dataKabKot[kabkotCombo.selectedIndex-1]
+    }
+  }
+
+  function showPemilihan(){
+    if(jenisCombo.selectedIndex!=0){
+      if(jenisCombo.selectedIndex==1 && provinsiCombo.selectedIndex!=0){
+        showGraph(selectedProv);
+      }
+      else if(jenisCombo.selectedIndex==2 && provinsiCombo.selectedIndex!=0 && kabkotCombo.selectedIndex!=0){
+        showGraph(selectedKabKot);
+      }else{
+        alert('Harap pilih nama provinsi!!!')
+      }
+    }else{
+      alert('Harap pilih jenis pemilihan!!!')
+    }
+  }
+
+  Chart.defaults.global.defaultFontFamily = 'Lato';
+    Chart.defaults.global.defaultFontSize = 18;
+    Chart.defaults.global.defaultFontColor = '#777';
+    var myChart = document.getElementById('myChart').getContext('2d');
+    var massPopChart=null;
+    showGraph("Sumatera Utara");
+
+    function showGraph(wilayah){
+      if(massPopChart!=null){
+        massPopChart.destroy();
+      }
+    var id_paslon= [];
+    var jlhSuara=[];
+    var namaPaslon=new Array("");
+    var i=1;
+    jlhSuara.unshift(0);
+    db.collection("pemilihan").where("nama_wilayah","==",wilayah.toLowerCase())
+    .get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc){
+        id_paslon.push(doc.data()["id_paslon"]);
+        jlhSuara.push(parseInt(doc.data()["jlh_suara"]));
+      });
+      if(id_paslon.length!=0){
+        id_paslon.forEach(function(a){
+          db.collection("paslon").doc(a).get().then(function(doc1){
+            namaPaslon.push(doc1.data()["nama1"].toString()+"-"+doc1.data()["nama2"].toString())
+            if(i==id_paslon.length){
+              jlhSuara.push(0);
+              namaPaslon.push("");
+              massPopChart = new Chart(myChart,{
+      type:'horizontalBar', //bar, horizontalBar, pie, doughnut, radar. polarArea
+      data:{
+        labels:namaPaslon,
+        datasets:[{
+          label:'Pemilih', 
+          data:jlhSuara,
+          //backgroundColor:'green'
+          backgroundColor:[
+            'green', 'red', 'blue', 'yellow', 'pink', 'purple'
+          ],
+          borderWidth:1,
+          borderColor:'#777',
+          hoverBorderWidth: '3',
+          hoverBorderColor: '#000'
+        }],
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Hasil Rekapitulasi Perolehan Suara Pilkada 2020',
+          fontSize:25
+        },
+        legend:{
+          display:false,
+          position:'right',
+          labels:{
+            fontColor:'#000',
+          }
+        },
+        layout:{
+          padding:{
+            left:50,
+            right:0,
+            bottom:0,
+            top:0
+          }
+        },
+        tooltips:{
+          enable:false
+        }
+      }
+    });
+            };
+            i++
+        });
+        });
+      }else{
+        alert("Wilayah belum melaksanakan pemilihan!!!")
+      }
+      console.log(id_paslon.length)
+      
+      
+    });
+    }    
+  </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  </body>
+</html>

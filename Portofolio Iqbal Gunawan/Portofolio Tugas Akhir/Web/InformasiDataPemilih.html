@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>EPilkada</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light" style="background-color: #ee3231;" role="navigation" >
+      <div class="container-fluid">
+        <a href="Admin.html"><p style="color: white; margin-top: -10px;font-size: 20px;">Kembali</p></a>
+    </div>
+    </nav>
+
+    <div class="container-fluid text-white mt-5">
+      <div class="row">
+        <div class="col-sm-12 pt-5 pb-5 text-center" style="margin-top: -50px;">
+          <h2 style="color: black">Data Pemilih</h2>
+        </div>
+        <div class="col-md-4">
+      <label for="nik">
+        NIK
+      </label>
+      <br>
+      <input type="text" name="nik" id="nik">
+      <br>
+      <label for="nama">
+        Nama
+      </label>
+      <br>
+      <input type="text" name="nama" id="nama">
+      <br>
+      <label for="alamat">
+        Alamat
+      </label>
+      <br>
+      <input type="text" name="alamat" id="alamat">
+      <br>
+      <label for="gol_darah">
+        Golongan darah
+      </label>
+      <br>
+      <input type="text" name="gol_darah" id="gol_darah">
+      <br>
+      <label for="jk">
+        Jenis Kelamin
+      </label>
+      <br>
+      <input type="text" name="jk" id="jk">
+      <br>
+      </div>
+      <div class="col-md-4">
+      <label for="agama">
+        Agama
+      </label>
+      <br>
+      <input type="text" name="agama" id="agama">
+      <br>
+      <label for="kab/kota">
+        Kabupaten / Kota
+      </label>
+      <br>
+      <input type="text" name="kab/kota" id="kab/kota">
+      <br>
+      <label for="kecamatan">
+        Kecamatan
+      </label>
+      <br>
+      <input type="text" name="kecamatan" id="kecamatan">
+      <br>
+      <label for="kel/desa">
+        Kelurahan / Desa
+      </label>
+      <br>
+      <input type="text" name="kel/desa" id="kel/desa">
+      <br>
+      <label for="pekerjaan">
+        Pekerjaan
+      </label>
+      <br>
+      <input type="text" name="pekerjaan" id="pekerjaan">
+      <br>
+      </div>
+      <div class="col-md-4">
+      <label for="provinsi">
+        Provinsi
+      </label>
+      <br>
+      <input type="text" name="provinsi" id="provinsi">
+      <br>
+      <label for="rt/rw">
+        RT / RW
+      </label>
+      <br>
+      <input type="text" name="rt/rw" id="rt/rw">
+      <br>
+      <label for="status_kawin">
+        Status Perkawinan
+      </label>
+      <br>
+      <input type="text" name="status_kawin" id="status_kawin">
+      <br>
+      <label for="tgl_lahir">
+        Tanggal Lahir
+      </label>
+      <br>
+      <input type="date" name="tgl_lahir" id="tgl_lahir">
+      <br>
+      <label for="tempat_lahir">
+        Tempat Lahir
+      </label>
+      <br>
+      <input type="text" name="tempat_lahir" id="tempat_lahir">
+      <br>
+    </div>
+      <div class="col-md-12">
+      <label for="kewarganegaraan">
+        Kewarganegaraan
+      </label>
+      <br>
+      <input type="text" name="kewarganegaraan" id="kewarganegaraan">
+      <br>
+      <label for="status_pilbupkot">
+        Status Pemilihan Bupati / Kota
+      </label>
+      <br>
+      <input type="text" name="status_pilbupkot" id="status_pilbupkot" value="false" readonly>
+      <br>
+      <label for="status_pilgub">
+        Status Pemilihan Gubernur
+      </label>
+      <br>
+      <input type="text" name="status_pilgub" id="status_pilgub" value="false" readonly>
+      <br>
+      </div>
+      </div>
+
+      <div class="col-md-12 center"> 
+          <p> <input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;" multiple></p>
+    <p> <label for="file" style="cursor: pointer; background-color: black; font-size: 15px">Tambah Foto (Minimal 10)</label></p>
+    <p><img id="output" width="200" /></p>
+      </div>
+
+      <div class="col-md-12 center" style="margin-bottom: 20px;">
+        <button id="addBtn" class="btn btn-primary">
+        Tambah Data
+      </button>
+      <button id="updateBtn" class="btn btn-success">
+        Perbarui Data
+      </button>
+      <button id="readBtn" class="btn btn-success">
+        Baca Data
+      </button>
+      <button id="removeBtn" class="btn btn-danger">
+        Hapus Data
+      </button>
+      </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase.js"></script>
+    <script type="text/javascript" src="./function.js"></script>
+  </body>
+</html>
